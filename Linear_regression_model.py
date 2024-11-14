@@ -39,6 +39,11 @@ try:
         saved_params = pickle.load(f)
         final_slope = saved_params["slope"]
         final_bias = saved_params["bias"]
+        mean_G1 = saved_params["mean_G1"]
+        mean_G2 = saved_params["mean_G2"]
+        mean_studytime = saved_params["mean_studytime"]
+        mean_failures = saved_params["mean_failures"]
+        mean_absences = saved_params["mean_absences"]
         print("Loaded saved molde parameters.")
 except:
     print("No saved parameters found. Training model...")
@@ -62,8 +67,14 @@ except:
         slope = slope + alpha * gr
         bias = bias + alpha * b
     print(alpha, loss)
+    mean_G1 = np.mean(data["G1"])
+    mean_G2 = np.mean(data["G2"])
+    mean_studytime = np.mean(data["studytime"])
+    mean_failures = np.mean(data["failures"])
+    mean_absences = np.mean(data["absences"])
     with open("linear_regression_params.pkl", "wb") as f:
-        pickle.dump({"slope": final_slope, "bias": final_bias}, f)
+        pickle.dump({"slope": final_slope, "bias": final_bias, "mean_G1": mean_G1, "mean_G2": mean_G2, 
+                     "mean_studytime": mean_studytime, "mean_failures": mean_failures, "mean_absences": mean_absences}, f)
     print("Model parameters saved.")
 predict = []
 for i in range(len(x_test)):
